@@ -14,6 +14,15 @@ public class Student {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     private int id;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     @JsonProperty("firstName")
     private String firstName;
     @JsonProperty("lastName")
