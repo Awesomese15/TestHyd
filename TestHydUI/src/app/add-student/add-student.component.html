@@ -1,5 +1,5 @@
 
-<form [formGroup]="studentForm" (ngSubmit)="onUpdate()">
+<form [formGroup]="studentForm" (ngSubmit)="onAddition()">
 
     <label>
       First Name:
@@ -16,5 +16,5 @@
         <input type="text" formControlName="rollNumber"  >
       </label>
   
-    <button type="submit" [disabled]="!studentForm.valid">UPDATE</button>
+    <button type="submit" [disabled]="!studentForm.valid" style="color: chartreuse; background-color: darkcyan;">ADD</button>
   </form>

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Student } from '../student-payload';
 import { StudentService } from '../student.service';
-import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { Router, ActivatedRoute, ParamMap, NavigationEnd } from '@angular/router';
 
 @Component({
   selector: 'app-view-studuent-list',
@@ -12,7 +12,12 @@ export class ViewStuduentListComponent implements OnInit {
   
   student : any;
   students : Student[]=[];
-  constructor(private service : StudentService, private route : Router) { }
+
+  constructor(private service : StudentService, private route : Router) { 
+   
+
+    
+  }
 
   ngOnInit(): void {
     this.service.getStudents().subscribe((items)=>{
@@ -31,5 +36,22 @@ export class ViewStuduentListComponent implements OnInit {
        this.route.navigate(['/update', item.rollNumber]);
     
   }
+
+  addStudent(){
+    this.route.navigate(['/add']);
+  }
+
+  deleteStudent(id : any){
+    this.service.removeStudent(id).subscribe(
+      res=>{
+        console.log("student deleted");
+      }
+    );
+window.location.reload();
+    
+  }
+
+
+  
 
 }

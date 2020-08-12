@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { StudentService } from '../student.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Student } from '../student-payload';
 
 @Component({
@@ -14,7 +14,7 @@ export class StudentComponent implements OnInit {
   lastname:string;
   rollno:number;
   
-  constructor(private service : StudentService, private route: ActivatedRoute) { 
+  constructor(private service : StudentService, private route: ActivatedRoute, private router : Router) { 
     // let id=parseInt(this.route.snapshot.paramMap.get('roll'));
 
     // console.log("Hi "+id)
@@ -39,50 +39,58 @@ export class StudentComponent implements OnInit {
     
     let id=parseInt(this.route.snapshot.paramMap.get('roll'));
 
+
     console.log("Hi "+id)
-    this.service.getbyRoll(id).subscribe((res)=>{
+    this.service.getbyRoll(id).subscribe((res : Student)=>{
       console.log("Hi2 "+res)
-      this.student=res;
-      this.firstname = this.student.firstName;
-      this.lastname = this.student.lastName;
-      this.rollno = this.student.rollNumber;
+      this.editStudent(res);
+      
+ 
       console.log(this.firstname);
      
     }
 
      );
 
-     this.studentForm.patchValue({
-      firstName: this.firstname,
-      lastName : this.lastname,
-      rollno: this.rollno
-     })
+ 
   
      this.studentForm=new FormGroup({
       firstName: new FormControl(''),
       lastName : new FormControl( ''),
-      rollno: new FormControl('')
+      rollNumber: new FormControl('')
     });
-  
+    
+    
  
   }
-    // console.log(this.firstname);
+
 
 
   studentGet : Student;
+
+  editStudent(student : Student){
+    this.studentForm.patchValue({
+      firstName: student.firstName,
+      lastName : student.lastName,
+      rollNumber: student.rollNumber
+     })
+  }
+
+  onUpdate() {
   
+      console.log(this.studentForm.value);
 
 
-  onSubmit() {
-    // TODO: Use EventEmitter with form value
-   // console.warn(this.studentForm.value);
+    this.service.updateStudents(this.studentForm.value.rollNumber,this.studentForm.value).subscribe(
+      
+      res => {
+        
+        console.log(this.studentForm.value);
+        console.log("Before navigate to view");
+        this.router.navigate(['/view']);
 
-    // this.service.updateStudents(this.studentForm.value, this.studentForm.value.rollno).subscribe(
-    //   res=>{
-    //     console.log("Updated");
-
-    //   }
-    //)
+      }
+    )
 
   }
 

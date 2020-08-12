@@ -1,7 +1,7 @@
 <div class="container">
-{{students | json}}
-    <div class="form-group">
 
+    <div class="form-group">
+  <form>
   <div class="card-deck" >
     <div class="card"  *ngFor="let item of students " style="width:400px">
         <img class="card-img-top"  alt="Card image" style="width:100%">
@@ -9,16 +9,30 @@
           <h4 class="card-title">{{item.firstName}}</h4>
        <p>Full Name : {{item.firstName}} {{item.lastName}}</p>
        <p>Roll Number : {{item.rollNumber}} </p>
-       <div>
-        <a (click)="viewAStudent(item)"  class="btn btn-primary stretched-link">VIEW</a>
-        <!-- <a href="#" class="btn btn-danger stretched-link">DELETE</a> -->
+       <div class="btn-group" role="group">
+         
+          <button (click)="viewAStudent(item)" type="button"  class="btn btn-primary stretched-link">VIEW</button>
+        
+
+       
+        <button (click)="deleteStudent(item.id)" type="button" class="btn btn-danger stretched-link" style="margin-left: 20px;">DELETE</button>
+
+    
        </div>
           
         </div>
       </div>
  
   </div>
+<!-- <div class="btn">
+  <a (click)="addStudent()" type="button" class="btn btn-primary stretched-link">ADD STUDENTS</a>
+  </div> -->
+  <!-- <a (click)="addStudent()" type="button" class="btn btn-primary stretched-link">ADD STUDENTS</a> -->
+  
+  </form>
+
 
     </div>
+   <a (click)="addStudent()" type="button" class="btn btn-primary">ADD STUDENTS</a>
 
 </div>
